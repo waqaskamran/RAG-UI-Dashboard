@@ -1,4 +1,12 @@
 import React, { useState } from "react";
+import "./LLMPanel.css";
+
+import FileUpload from "./FileUpload";
+import RedisManager from "./RedisManager";
+import VoiceRecorder from "./VoiceRecorder";
+//import { queryText } from "./api/flaskAPI";
+import { Link } from "react-router-dom";
+
 
 const LLMPanel = () => {
   const [sessionId, setSessionId] = useState("user123");
@@ -7,29 +15,28 @@ const LLMPanel = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // flaskAPI.js inline
-const API_BASE = "http://127.0.0.1:5000";
+  const API_BASE = "http://127.0.0.1:5000";
 
-const queryText = async (sessionId, question) => {
-  const response = await fetch(`${API_BASE}/ask-hybrid`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      session_id: sessionId,
-      question: question
-    })
-  });
+  const queryText = async (sessionId, question) => {
+    const response = await fetch(`${API_BASE}/ask-hybrid`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        session_id: sessionId,
+        question: question
+      })
+    });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-  return await response.json();
-};
+    return await response.json();
+  };
 
-const handleQuery = async () => {
+  const handleQuery = async () => {
     if (!question.trim()) return;
 
     setLoading(true);
@@ -60,155 +67,90 @@ const handleQuery = async () => {
   };
 
   return (
-    <div style={{ 
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      minHeight: '100vh',
-      padding: '40px 20px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <div style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
-        <div style={{
-          background: 'white',
-          borderRadius: '20px',
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
-          overflow: 'hidden',
-          height: '700px',
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-          
+    <div className="llm-container">
+      <div className="llm-wrapper">
+        <div className="llm-card">
+
           {/* Header */}
-          <div style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            padding: '30px',
-            color: 'white'
-          }}>
-            <h1 style={{
-              fontSize: '28px',
-              fontWeight: '700',
-              marginBottom: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}>
+          <div className="llm-header">
+            <h1 className="llm-title">
               <span>🤖</span>
-              Rana LLM Assistant
+              DocuSense AI
             </h1>
-            <p style={{ opacity: 0.9, fontSize: '14px', margin: 0 }}>
+            <p className="llm-subtitle">
               Ask intelligent questions about your documents
             </p>
+
+
+            <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
+              <Link to="/ingest" className="llm-button-secondary" style={{ padding: "8px 12px", fontSize: 13 }}>
+                📄 Ingest
+              </Link>
+              
+              <Link
+                to="/batch-ingest"
+                className="llm-button-secondary"
+                style={{ padding: "8px 12px", fontSize: 13 }}
+              >
+                🗂️ Batch Ingest
+              </Link>
+
+              <Link to="/evaluate" className="llm-button-secondary" style={{ padding: "8px 12px", fontSize: 13 }}>
+                📊 Evaluate
+              </Link>
+
+              <Link to="/batch-evaluate" className="llm-button-secondary" style={{ padding: "8px 12px", fontSize: 13 }}>
+               🗃️ Batch Evaluate
+             </Link>                
+            </div>
+
           </div>
 
           {/* Body */}
-          <div style={{
-            padding: '30px',
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden'
-          }}>
-            
+          <div className="llm-body">
+
             {/* Session ID */}
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{
-                display: 'block',
-                fontSize: '11px',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                color: '#667eea',
-                marginBottom: '8px'
-              }}>
+            <div className="llm-form-group">
+              <label className="llm-label">
                 Session ID
               </label>
               <input
                 type="text"
+                className="llm-input"
                 value={sessionId}
                 onChange={(e) => setSessionId(e.target.value)}
                 placeholder="Enter session ID"
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: '2px solid #e0e7ff',
-                  borderRadius: '12px',
-                  fontSize: '15px',
-                  transition: 'all 0.3s ease',
-                  outline: 'none'
-                }}
-                onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                onBlur={(e) => e.target.style.borderColor = '#e0e7ff'}
+                style={{ fontSize: '16px' }}
               />
             </div>
 
             {/* Question */}
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{
-                display: 'block',
-                fontSize: '11px',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                color: '#667eea',
-                marginBottom: '8px'
-              }}>
+            <div className="llm-form-group">
+              <label className="llm-label">
                 Your Question
               </label>
               <textarea
+                className="llm-textarea"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Type your question here... (Ctrl + Enter to submit)"
-                style={{
-                  width: '100%',
-                  height: '100px',
-                  padding: '12px 16px',
-                  border: '2px solid #e0e7ff',
-                  borderRadius: '12px',
-                  fontSize: '15px',
-                  resize: 'none',
-                  transition: 'all 0.3s ease',
-                  outline: 'none',
-                  fontFamily: 'inherit'
-                }}
-                onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                onBlur={(e) => e.target.style.borderColor = '#e0e7ff'}
+                style={{ fontSize: '16px' }}
               />
+
+              <VoiceRecorder />
             </div>
 
             {/* Buttons */}
-            <div style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
+            <div className="llm-button-group">
               <button
+                className="llm-button-primary"
                 onClick={handleQuery}
                 disabled={loading || !question.trim()}
-                style={{
-                  flex: 1,
-                  padding: '12px 24px',
-                  border: 'none',
-                  borderRadius: '12px',
-                  fontSize: '15px',
-                  fontWeight: '600',
-                  cursor: loading || !question.trim() ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.3s ease',
-                  background: loading || !question.trim() ? '#94a3b8' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px'
-                }}
               >
                 {loading ? (
                   <>
-                    <div style={{
-                      width: '16px',
-                      height: '16px',
-                      border: '2px solid rgba(255, 255, 255, 0.3)',
-                      borderTopColor: 'white',
-                      borderRadius: '50%',
-                      animation: 'spin 0.8s linear infinite'
-                    }} />
+                    <div className="llm-spinner" />
                     <span>Processing...</span>
                   </>
                 ) : (
@@ -220,23 +162,9 @@ const handleQuery = async () => {
               </button>
 
               <button
+                className="llm-button-secondary"
                 onClick={handleReset}
                 disabled={loading}
-                style={{
-                  padding: '12px 24px',
-                  border: '2px solid #e0e7ff',
-                  borderRadius: '12px',
-                  fontSize: '15px',
-                  fontWeight: '600',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.3s ease',
-                  background: 'white',
-                  color: '#667eea',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  opacity: loading ? 0.5 : 1
-                }}
               >
                 <span>🔄</span>
                 <span>Reset</span>
@@ -245,69 +173,27 @@ const handleQuery = async () => {
 
             {/* Error */}
             {error && (
-              <div style={{
-                padding: '12px 16px',
-                borderRadius: '12px',
-                marginBottom: '20px',
-                background: '#fee2e2',
-                border: '2px solid #fca5a5',
-                color: '#991b1b',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
+              <div className="llm-error">
                 <span>⚠️</span>
                 <span>{error}</span>
               </div>
             )}
 
             {/* Answer */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-              <label style={{
-                display: 'block',
-                fontSize: '11px',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                color: '#667eea',
-                marginBottom: '8px'
-              }}>
+            <div className="llm-answer-container">
+              <label className="llm-label">
                 Response
               </label>
-              <div style={{
-                flex: 1,
-                background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-                border: '2px solid #e0e7ff',
-                borderRadius: '12px',
-                padding: '20px',
-                overflow: 'auto',
-                minHeight: '200px'
-              }}>
+              <div className="llm-answer-box">
                 {answer ? (
-                  <pre style={{
-                    margin: 0,
-                    fontFamily: 'Monaco, Consolas, monospace',
-                    fontSize: '13px',
-                    color: '#334155',
-                    lineHeight: '1.6',
-                    whiteSpace: 'pre-wrap',
-                    wordWrap: 'break-word'
-                  }}>
+                  <pre className="llm-answer-text">
                     {answer}
                   </pre>
                 ) : (
-                  <div style={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#94a3b8',
-                    textAlign: 'center'
-                  }}>
-                    <div style={{ fontSize: '48px', marginBottom: '16px', opacity: 0.5 }}>💭</div>
-                    <p style={{ margin: 0 }}>Your answer will appear here</p>
-                    <p style={{ fontSize: '12px', marginTop: '4px', margin: 0 }}>Ask a question to get started</p>
+                  <div className="llm-answer-placeholder">
+                    <div className="llm-answer-icon">💭</div>
+                    <p className="llm-answer-message">Your answer will appear here</p>
+                    <p className="llm-answer-submessage">Ask a question to get started</p>
                   </div>
                 )}
               </div>
@@ -316,25 +202,12 @@ const handleQuery = async () => {
           </div>
 
           {/* Footer */}
-          <div style={{
-            padding: '16px',
-            textAlign: 'center',
-            background: '#f8fafc',
-            borderTop: '1px solid #e0e7ff',
-            fontSize: '13px',
-            color: '#64748b'
-          }}>
-            Powered by <span style={{ color: '#667eea', fontWeight: '600' }}>Rana LLM</span> Service
+          <div className="llm-footer">
+            Powered by <span className="llm-footer-brand">Rana LLM</span> Service
           </div>
 
         </div>
       </div>
-
-      <style>{`
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   );
 };

@@ -1,0 +1,130 @@
+.redis-manager-container {
+  margin-bottom: 20px;
+}
+
+.redis-manager-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #667eea;
+  margin-bottom: 8px;
+}
+
+.redis-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.redis-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid #e0e7ff;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.redis-input:focus {
+  border-color: #667eea;
+}
+
+.redis-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.redis-button:hover {
+  opacity: 0.9;
+}
+
+.redis-button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.redis-button-secondary {
+  background: white;
+  border: 2px solid #e0e7ff;
+  color: #667eea;
+}
+
+.redis-button-secondary:hover {
+  background: #f8fafc;
+  opacity: 1;
+}
+
+.redis-data-list {
+  max-height: 200px;
+  overflow-y: auto;
+  background: #f8fafc;
+  border: 2px solid #e0e7ff;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.redis-data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 8px;
+  background: white;
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.redis-data-content {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.redis-data-key {
+  font-size: 12px;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 4px;
+}
+
+.redis-data-value {
+  font-size: 12px;
+  color: #334155;
+  word-break: break-all;
+}
+
+.redis-data-delete {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.redis-data-delete:hover {
+  background: #fee2e2;
+}
+
+.redis-empty {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+  padding: 20px;
+}
+
+.redis-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
