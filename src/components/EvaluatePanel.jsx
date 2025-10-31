@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LLMPanel.css";
+import AppLayout from "./AppLayout";
 
 const EvaluatePanel = () => {
   const [recruiterId, setRecruiterId] = useState("");
@@ -10,7 +11,7 @@ const EvaluatePanel = () => {
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
 
-  const API_BASE = "http://127.0.0.1:5000";
+  const API_BASE = "http://127.0.0.1:5002";
 
   const handleEvaluate = async () => {
     setError("");
@@ -61,6 +62,7 @@ const EvaluatePanel = () => {
   };
 
   return (
+    <AppLayout>
     <div className="llm-container">
       <div className="llm-wrapper">
         <div className="llm-card">
@@ -205,6 +207,7 @@ LLM score: ${result.llm_score ?? "N/A"}`}</pre>
         </div>
       </div>
     </div>
+    </AppLayout>
   );
 };
 

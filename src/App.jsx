@@ -5,7 +5,8 @@ import ResumeIngest from "./components/ResumeIngest";
 import EvaluatePanel from "./components/EvaluatePanel";
 import BatchResumeIngest from "./components/BatchResumeIngest";
 import EvaluateBatchPanel from "./components/EvaluateBatchPanel";
-
+import LetterheadGenerator from "./components/LetterheadGenerator";
+import ConsultechLetterGenerator from "./components/ConsultechLetter";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/evaluate" element={<EvaluatePanel />} />
         <Route path="/batch-ingest" element={<BatchResumeIngest />} />
         <Route path="/batch-evaluate" element={<EvaluateBatchPanel />} />
+        <Route path="/letter-head-gen" element={<LetterheadGenerator />} />
+        <Route path="/consultech-letter-head" element={<ConsultechLetterGenerator />} />
       </Routes>
     </Router>
   );

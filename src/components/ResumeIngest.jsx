@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./LLMPanel.css";
 import { Link } from "react-router-dom";
+import AppLayout from "./AppLayout";
 
 
 const ResumeIngest = () => {
@@ -14,7 +15,7 @@ const ResumeIngest = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState("");
 
-  const API_BASE = "http://127.0.0.1:5000";
+  const API_BASE = "http://127.0.0.1:5002";
   const dropRef = useRef(null);
 
   // Create and clean up preview URL
@@ -156,6 +157,7 @@ const ResumeIngest = () => {
   };
 
   return (
+    <AppLayout>
     <div className="llm-container">
       <div className="llm-wrapper">
         <div className="llm-card">
@@ -369,6 +371,7 @@ const ResumeIngest = () => {
         </div>
       </div>
     </div>
+    </AppLayout>
   );
 };
 

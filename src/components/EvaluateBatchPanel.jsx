@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LLMPanel.css";
+import AppLayout from "./AppLayout";
 
 const EvaluateBatchPanel = () => {
   const [recruiterId, setRecruiterId] = useState("");
@@ -15,7 +16,7 @@ const EvaluateBatchPanel = () => {
   // Toggle for showing inline details
   const [showDetailsMap, setShowDetailsMap] = useState({});
 
-  const API_BASE = "http://127.0.0.1:5000";
+  const API_BASE = "http://127.0.0.1:5002";
 
   const handleEvaluateBatch = async () => {
     setError("");
@@ -102,6 +103,7 @@ const EvaluateBatchPanel = () => {
 };
 
   return (
+    <AppLayout>
     <div className="llm-container">
       <div className="llm-wrapper">
         <div className="llm-card">
@@ -237,26 +239,137 @@ const EvaluateBatchPanel = () => {
               </button>
 
 
-                      {showDetails && r.matched_skills && r.missing_skills && (
-                        <div style={{ marginTop: 8 }}>
-                          <div>
-                            <strong>Matched Skills:</strong>
-                            <ul className="list-disc list-inside text-green-700">
-                              {r.matched_skills.map((s, i) => (
-                                <li key={i}>{s}</li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <strong>Missing Skills:</strong>
-                            <ul className="list-disc list-inside text-red-700">
-                              {r.missing_skills.map((s, i) => (
-                                <li key={i}>{s}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      )}
+                  {showDetails && r.matched_skills && r.missing_skills && (
+  <div style={{ marginTop: 12, padding: 12, backgroundColor: "#fff", borderRadius: 8, border: "1px solid #e0e0e0" }}>
+    
+    {/* Assessment Section */}
+    {r.assessment && (
+      <div style={{ marginBottom: 16, padding: 12, backgroundColor: "#f0f7ff", borderRadius: 6 }}>
+        <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, color: "#1e40af" }}>
+          📋 Assessment
+        </h4>
+        <div style={{ fontSize: 13, marginBottom: 6 }}>
+          <strong>Recommendation:</strong> <span style={{ color: "#059669" }}>{r.assessment.recommendation}</span>
+        </div>
+        <div style={{ fontSize: 13, marginBottom: 6 }}>
+          <strong>Reasoning:</strong> {r.assessment.reasoning}
+        </div>
+        
+        {r.assessment.strengths && r.assessment.strengths.length > 0 && (
+          <div style={{ fontSize: 13, marginTop: 8 }}>
+            <strong style={{ color: "#059669" }}>💪 Strengths:</strong>
+            <span style={{ marginLeft: 6 }}>
+              {r.assessment.strengths.map((s, i) => (
+                <span key={i} style={{ 
+                  display: "inline-block", 
+                  padding: "2px 8px", 
+                  margin: "2px", 
+                  backgroundColor: "#d1fae5", 
+                  borderRadius: 4, 
+                  fontSize: 12 
+                }}>
+                  {s}
+                </span>
+              ))}
+            </span>
+          </div>
+        )}
+        
+        {r.assessment.concerns && r.assessment.concerns.length > 0 && (
+          <div style={{ fontSize: 13, marginTop: 8 }}>
+            <strong style={{ color: "#dc2626" }}>⚠️ Concerns:</strong>
+            <span style={{ marginLeft: 6 }}>
+              {r.assessment.concerns.map((s, i) => (
+                <span key={i} style={{ 
+                  display: "inline-block", 
+                  padding: "2px 8px", 
+                  margin: "2px", 
+                  backgroundColor: "#fee2e2", 
+                  borderRadius: 4, 
+                  fontSize: 12 
+                }}>
+                  {s}
+                </span>
+              ))}
+            </span>
+          </div>
+        )}
+      </div>
+    )}
+
+    {/* Matched Skills */}
+    <div style={{ marginBottom: 12 }}>
+      <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, color: "#059669" }}>
+        ✅ Matched Skills ({r.matched_skills.length})
+      </h4>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        {r.matched_skills.map((skillObj, i) => (
+          <div
+            key={i}
+            style={{
+              padding: "6px 12px",
+              backgroundColor: "#d1fae5",
+              border: "1px solid #6ee7b7",
+              borderRadius: 6,
+              fontSize: 13,
+              display: "flex",
+              alignItems: "center",
+              gap: 6
+            }}
+          >
+            <span style={{ fontWeight: 500 }}>{skillObj.skill}</span>
+            <span style={{ 
+              fontSize: 11, 
+              padding: "2px 6px", 
+              backgroundColor: "#059669", 
+              color: "white", 
+              borderRadius: 4 
+            }}>
+              {skillObj.match_type}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Missing Skills */}
+    {r.missing_skills && r.missing_skills.length > 0 && (
+      <div>
+        <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 8, color: "#dc2626" }}>
+          ❌ Missing Skills ({r.missing_skills.length})
+        </h4>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {r.missing_skills.map((skillObj, i) => (
+            <div
+              key={i}
+              style={{
+                padding: "6px 12px",
+                backgroundColor: "#fee2e2",
+                border: "1px solid #fca5a5",
+                borderRadius: 6,
+                fontSize: 13,
+                display: "flex",
+                alignItems: "center",
+                gap: 6
+              }}
+            >
+              <span style={{ fontWeight: 500 }}>{skillObj.skill}</span>
+              <span style={{ 
+                fontSize: 11, 
+                padding: "2px 6px", 
+                backgroundColor: skillObj.priority === "required" ? "#dc2626" : "#f59e0b", 
+                color: "white", 
+                borderRadius: 4 
+              }}>
+                {skillObj.priority}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+)}
                     </div>
                   );
                 })}
@@ -271,6 +384,7 @@ const EvaluateBatchPanel = () => {
         </div>
       </div>
     </div>
+    </AppLayout>
   );
 };
 

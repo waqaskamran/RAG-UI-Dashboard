@@ -46,7 +46,7 @@
 /* Body */
 .llm-body {
   padding: 30px;
-  height: calc(700px - 120px - 49px); /* Total - header - footer */
+  height: calc(900px - 120px - 49px); /* Total - header - footer */
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -241,4 +241,107 @@
 .llm-footer-brand {
   color: #667eea;
   font-weight: 600;
+}
+
+/* Ensure the panel never exceeds main-content height */
+.llm-panel-full {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #f8fafc;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Footer — thinner and no extra scroll */
+.llm-footer {
+  flex-shrink: 0;
+  background: #f8fafc;
+  border-top: 1px solid #e0e7ff;
+  padding: 8px 12px;         /* reduced padding */
+  text-align: center;
+  color: #64748b;
+  font-size: 12px;           /* slightly smaller text */
+  line-height: 1.2;          /* tighter spacing */
+}
+
+/* Ensure scroll stays inside content only */
+.llm-content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Header */
+.llm-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 24px 32px;
+  color: white;
+  flex-shrink: 0;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+
+
+/* Form section */
+.llm-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.llm-button-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* Answer Section */
+.llm-answer-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.llm-answer-box {
+  flex: 1;
+  background: #f1f5f9;
+  border: 2px solid #e0e7ff;
+  border-radius: 12px;
+  padding: 20px;
+  overflow: auto;
+  min-height: 200px;
+}
+
+.llm-answer-box pre {
+  white-space: pre-wrap;      /* wraps long lines */
+  word-wrap: break-word;      /* breaks long words */
+  overflow-x: hidden;         /* hides horizontal scroll */
+}
+
+
+
+/* Remove previous card/wrapper restrictions */
+.llm-wrapper,
+.llm-card {
+  all: unset;
+}
+
+.llm-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #667eea;
+  text-transform: uppercase;
 }

@@ -43,7 +43,7 @@ export default function VoiceRecorder() {
       formData.append("file", audioBlob, "voice.webm");
 
       try {
-        const res = await axios.post("http://127.0.0.1:5000/voice-query", formData);
+        const res = await axios.post("http://127.0.0.1:5002/voice-query", formData);
         setResponse(res.data);
 
         if (res.data.rag_response) {
